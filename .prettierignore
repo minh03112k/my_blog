@@ -1,7 +1,0 @@
-node_modules/
-dist/
-dist-ssr/
-coverage/
-pnpm-lock.yaml
-# Custom JSON metadata followed by Markdown; preserve the article parser format.
-src/content/**/*.md

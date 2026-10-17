@@ -1,8 +1,10 @@
 # Dev Notes
 
-A personal blog built with Vite, React, TypeScript, Tailwind CSS, and Zustand. Articles are Markdown files bundled into a static site. No backend, database, or CMS is required.
+A personal blog built with Vite+, React, TypeScript, Tailwind CSS, and Zustand. Articles are Markdown files bundled into a static site. No backend, database, or CMS is required.
 
 ## Run locally
+
+Use Node.js 22.21.1, pinned in `.node-version`, and pnpm 11.12.0, pinned in `package.json`. Vite+ runs through the project scripts; a global `vp` installation is optional.
 
 ```sh
 pnpm install
@@ -37,7 +39,7 @@ The included articles are examples, not the owner's original writing. Replace th
 ## Verify and build
 
 ```sh
-pnpm lint
+pnpm check
 pnpm build
 pnpm preview
 ```
@@ -60,7 +62,7 @@ This is a client-rendered first version. Before investing in search-engine disco
 
 ## Code quality
 
-Prettier handles formatting; Oxlint checks React hooks, accessibility, imports, and TypeScript correctness. Warnings and unused lint suppressions fail checks. TypeScript uses strict mode, checked array indexing, and exact optional properties.
+Vite+ provides Oxfmt for formatting and Oxlint for React hooks, accessibility, imports, and TypeScript correctness. Their configuration lives in the `fmt` and `lint` blocks in `vite.config.ts`. Warnings and unused lint suppressions fail checks. TypeScript uses strict mode, checked array indexing, and exact optional properties.
 
 ```sh
 pnpm format        # Format source and config files
@@ -68,12 +70,14 @@ pnpm format:check  # Check formatting without changes
 pnpm lint          # Check code; warnings fail
 pnpm lint:fix      # Apply safe lint fixes
 pnpm typecheck    # Check TypeScript
-pnpm check         # Run lint, formatting, and type checks
+pnpm check         # Run vp check, then tsc -b for both TypeScript projects
 ```
 
-Use pnpm for dependency installation and all project scripts. The package manager version is pinned in `package.json`; commit `pnpm-lock.yaml` with dependency changes. Use `pnpm install --frozen-lockfile` in CI. Run `check` and `build` before sharing changes. `.editorconfig` defines shared indentation and line endings. In your editor, select Prettier as the formatter and enable format on save if desired.
+Use pnpm for dependency installation and all project scripts. The package manager version is pinned in `package.json`; commit `pnpm-lock.yaml` with dependency changes. Use `pnpm install --frozen-lockfile` in CI. Run `check` and `build` before sharing changes. `.editorconfig` defines shared indentation and line endings. In your editor, select Oxfmt as the formatter and enable format on save if desired.
 
-Generated output, dependencies, lockfiles, and article source files are excluded from formatting. Articles use a custom JSON-metadata/Markdown format that a Markdown formatter can reinterpret; edit them directly.
+`pnpm check` uses Vite+'s type-aware checks and also runs `tsc -b` to validate both the application and build configuration projects. `pnpm build` runs `tsc -b` before the Vite+ production build. Direct `pnpm exec vp build` runs only the bundler. This project has no automated test suite configured yet.
+
+Generated output, dependencies, lockfiles, and article source files are excluded from formatting through `fmt.ignorePatterns` in `vite.config.ts`. Articles use a custom JSON-metadata/Markdown format that a Markdown formatter can reinterpret; edit them directly.
 
 ## Atomic Design structure
 
