@@ -42,7 +42,13 @@ pnpm build
 pnpm preview
 ```
 
-Deploy `dist/` to any static hosting service. Hash-based article links work without server rewrite configuration. Nothing has been deployed by this setup.
+Deploy `dist/` to any static hosting service. Hash-based article links work without server rewrite configuration. Relative asset paths support GitHub Pages repository URLs.
+
+## Deploy to GitHub Pages
+
+In the GitHub repository, open **Settings → Pages** and select **GitHub Actions** as the source. Push this project to the `main` branch. The **Deploy to GitHub Pages** workflow installs the pinned pnpm version, runs `pnpm check`, builds the site, and publishes `dist/`.
+
+Every push to `main` deploys an update. You can also run the workflow from the **Actions** tab. The deployment URL appears in the workflow's `github-pages` environment.
 
 ## Content architecture
 
