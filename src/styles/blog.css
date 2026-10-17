@@ -1,0 +1,163 @@
+.reader {
+  max-width: 740px;
+  margin: 40px auto 80px;
+}
+
+.back-link {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.reader h1,
+.about h1 {
+  font-family: Manrope, sans-serif;
+  font-size: 43px;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -1.5px;
+  margin: 18px 0;
+}
+
+.reader-description {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.sample-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 18px;
+}
+
+.prose {
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.prose h2 {
+  font-size: 24px;
+  font-weight: 650;
+  margin: 30px 0 12px;
+}
+
+.prose h3 {
+  font-size: 19px;
+  font-weight: 650;
+  margin: 24px 0 10px;
+}
+
+.prose p {
+  margin: 15px 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 24px;
+  margin: 15px 0;
+  list-style: revert;
+}
+
+.prose pre {
+  padding: 23px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  overflow: auto;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 22px 0;
+}
+
+.prose code {
+  font-size: 0.88em;
+  background: var(--soft);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.prose pre code {
+  padding: 0;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--violet);
+  padding: 3px 22px;
+  margin: 23px 0;
+  background: var(--soft);
+  color: var(--muted);
+}
+
+.about {
+  max-width: 740px;
+  min-height: 65vh;
+  margin: 50px auto 80px;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+
+.empty > svg {
+  margin: 0 auto 15px;
+}
+
+.empty h3,
+.empty h1 {
+  color: var(--text);
+  font-weight: 650;
+  margin-bottom: 8px;
+}
+
+.empty button,
+.empty > a {
+  display: inline-block;
+  padding: 9px 15px;
+  margin-top: 18px;
+  border-radius: 6px;
+  background: var(--soft);
+  color: var(--violet);
+}
+
+@media (max-width: 580px) {
+  .reader h1,
+  .about h1 {
+    font-size: 34px;
+  }
+  .reader-description {
+    font-size: 16px;
+  }
+}
+
+.article-contents {
+  margin: 24px 0 32px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.article-contents h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.article-contents ul {
+  margin: 0;
+  padding-left: 22px;
+  list-style: disc;
+}
+
+.article-contents ul ul {
+  list-style: circle;
+}
+
+.article-contents a:hover {
+  color: var(--violet);
+  text-decoration: underline;
+}

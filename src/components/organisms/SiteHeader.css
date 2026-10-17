@@ -1,0 +1,74 @@
+header {
+  height: 86px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.header-inner {
+  max-width: 1120px;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  font-family: Manrope, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.brand-icon {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  color: var(--violet);
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.brand-light {
+  font-weight: 500;
+}
+
+.brand-period {
+  color: var(--violet);
+}
+
+.header-inner nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 14px;
+  color: var(--muted);
+  height: 100%;
+}
+
+.header-inner nav > a {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.nav-active:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--violet);
+}

@@ -1,0 +1,15 @@
+.metadata {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 20px;
+}
+
+.meta-dot {
+  height: 3px;
+  width: 3px;
+  background: #b7b5c0;
+  border-radius: 50%;
+}

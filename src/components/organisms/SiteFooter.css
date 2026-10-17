@@ -1,0 +1,31 @@
+footer {
+  border-top: 1px solid var(--line);
+  max-width: 1024px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 27px 0 33px;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.footer-brand {
+  font-family: Manrope, sans-serif;
+  font-weight: 750;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.footer-brand span,
+.footer-star {
+  color: var(--violet);
+}
+
+footer p {
+  margin-top: 4px;
+}
+
+.footer-star {
+  padding: 0 8px;
+}
