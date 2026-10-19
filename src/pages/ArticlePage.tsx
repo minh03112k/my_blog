@@ -1,11 +1,19 @@
 import { Link } from 'react-router'
 import { ArrowLeft } from 'lucide-react'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { defaultUrlTransform } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { Article } from '../data/articles'
 import { CategoryBadge } from '../components/atoms/CategoryBadge'
 import { ChapterNavigation } from '../components/organisms/ChapterNavigation'
 import { ArticleMetadata } from '../components/molecules/ArticleMetadata'
+
+/** Resolve public images relative to the deployment base, preserving Markdown URL safety. */
+function resolveArticleUrl(url: string) {
+  const safeUrl = defaultUrlTransform(url)
+  return safeUrl.startsWith('/images/')
+    ? `${import.meta.env.BASE_URL}${safeUrl.slice(1)}`
+    : safeUrl
+}
 
 /** Renders the ArticlePage section from caller-provided content. */
 export function ArticlePage({
@@ -95,7 +103,10 @@ export function ArticlePage({
         ) : null}
         {article.body.trim() ? (
           <div className="prose mt-8 border-t border-(--line) pt-5">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              urlTransform={resolveArticleUrl}
+            >
               {article.body}
             </ReactMarkdown>
           </div>
