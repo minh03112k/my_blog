@@ -1,0 +1,102 @@
+.chapter-sidebar {
+  display: none;
+}
+
+.chapter-disclosure {
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+}
+
+.chapter-disclosure summary {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.chapter-disclosure .chapter-navigation {
+  margin-top: 16px;
+}
+
+.chapter-navigation {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.chapter-navigation a {
+  display: block;
+  padding: 7px 10px;
+  border-left: 2px solid transparent;
+  overflow-wrap: anywhere;
+}
+
+.chapter-navigation a:hover {
+  color: var(--violet);
+}
+
+.chapter-navigation a[aria-current='page'] {
+  color: var(--violet);
+  border-left-color: var(--violet);
+  background: var(--soft);
+  font-weight: 600;
+}
+
+.chapter-topic {
+  font-weight: 600;
+}
+
+.chapter-group {
+  margin-top: 20px;
+}
+
+.chapter-section {
+  margin: 0 0 6px;
+  padding-left: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.chapter-navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 16px;
+}
+
+.article-with-chapters {
+  max-width: 740px;
+  margin: 40px auto 80px;
+}
+
+.article-with-chapters > .reader {
+  min-width: 0;
+  margin: 0;
+}
+
+@media (min-width: 1200px) {
+  .article-with-chapters {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 740px);
+    gap: 32px;
+    max-width: 992px;
+    align-items: start;
+  }
+
+  .chapter-sidebar {
+    display: block;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .chapter-sidebar h2 {
+    margin: 0 0 16px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .chapter-disclosure {
+    display: none;
+  }
+}
