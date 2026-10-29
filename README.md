@@ -104,7 +104,7 @@ The homepage uses a text-first, single-column article index. Titles, summaries, 
 
 `src/content/data-structures-and-algorithms/index.md` is the main outline. Its table of contents is generated from chapter metadata and grouped by section. Only the main outline appears in the article index; each chapter links back to it and to its previous and next chapters.
 
-The nine chapters cover Big O, sorting, and data structures. Edit chapter Markdown after `---`. For a new unfinished chapter, use `"kind": "placeholder"`, then switch to `"kind": "article"` when ready. Placeholder pages show “Content coming later.” without a reading-time estimate.
+The ten chapters cover Big O, sorting, and data structures. Edit chapter Markdown after `---`. For a new unfinished chapter, use `"kind": "placeholder"`, then switch to `"kind": "article"` when ready. Placeholder pages show “Content coming later.” without a reading-time estimate.
 
 Chapter metadata uses `"chapter": { "parent": "data-structures-and-algorithms", "order": 1, "section": "Understanding Big O" }`. Orders must be unique within an outline. Use `"kind": "outline"` for a main table-of-contents page and `"kind": "article"` for your completed writing.
 
@@ -127,6 +127,7 @@ src/content/
       stacks.md
       queues.md
       linked-lists.md
+      trees.md
 ```
 
 The loader discovers Markdown recursively. File paths organize the workspace; metadata controls URLs (`slug`), chapter order (`chapter.order`), and Contents grouping (`chapter.section`). Moving a file does not change its URL. Keep slugs unique across all folders. Only article files belong under `src/content/`; keep supporting notes elsewhere because every `.md` file here is loaded as an article.

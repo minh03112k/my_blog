@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { getArticleHeadings } from './article-headings'
+import type { ArticleHeading } from './article-headings'
 
 const articleSchema = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
@@ -21,6 +23,7 @@ const articleSchema = z.object({
 
 /** A validated, file-backed article ready for reading. */
 export type Article = z.infer<typeof articleSchema> & {
+  readonly headings: readonly ArticleHeading[]
   readonly body: string
   readonly minutes: number
 }
@@ -41,6 +44,7 @@ export const articles: readonly Article[] = Object.entries(files)
     return {
       ...metadata,
       body,
+      headings: getArticleHeadings(body),
       minutes: Math.max(1, Math.ceil(body.split(/\s+/).length / 200)),
     }
   })
@@ -55,8 +59,23 @@ for (const article of articles) {
     const parent = articles.find(
       (candidate) => candidate.slug === article.chapter?.parent,
     )
-    if (!parent || parent.chapter || parent.kind !== 'outline') {
+    if (!parent || parent.slug === article.slug) {
       throw new Error(`Invalid chapter parent: ${article.slug}`)
+    }
+    const ancestors = new Set([article.slug])
+    let ancestor: Article | undefined = parent
+    while (ancestor) {
+      if (ancestors.has(ancestor.slug)) {
+        throw new Error(`Chapter parent cycle: ${article.slug}`)
+      }
+      ancestors.add(ancestor.slug)
+      if (!ancestor.chapter && ancestor.kind !== 'outline') {
+        throw new Error(`Invalid chapter root: ${article.slug}`)
+      }
+      const parentSlug: string | undefined = ancestor.chapter?.parent
+      ancestor = parentSlug
+        ? articles.find((candidate) => candidate.slug === parentSlug)
+        : undefined
     }
     if (
       articles.some(

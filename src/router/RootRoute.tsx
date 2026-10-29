@@ -9,7 +9,9 @@ export function RootRoute() {
   const location = useLocation()
   const resetFilters = useBlogStore((state) => state.resetFilters)
   useEffect(() => {
-    window.scrollTo(0, 0)
+    if (!new URLSearchParams(location.search).has('section')) {
+      window.scrollTo(0, 0)
+    }
     const article = articles.find(
       (article) => location.pathname === `/article/${article.slug}`,
     )
@@ -18,7 +20,7 @@ export function RootRoute() {
       : location.pathname === '/about'
         ? 'About | Dev Notes'
         : 'Dev Notes — Building, learning, sharing'
-  }, [location.pathname])
+  }, [location.pathname, location.search])
   return (
     <BlogLayout route={location.pathname} onHome={resetFilters}>
       <Outlet />

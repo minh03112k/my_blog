@@ -16,10 +16,13 @@
 
 .chapter-disclosure .chapter-navigation {
   margin-top: 16px;
+  max-height: 65dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .chapter-navigation {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
 }
 
@@ -34,7 +37,8 @@
   color: var(--violet);
 }
 
-.chapter-navigation a[aria-current='page'] {
+.chapter-navigation a[aria-current='page'],
+.chapter-navigation a[aria-current='location'] {
   color: var(--violet);
   border-left-color: var(--violet);
   background: var(--soft);
@@ -52,7 +56,7 @@
 .chapter-section {
   margin: 0 0 6px;
   padding-left: 12px;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--muted);
 }
 
@@ -73,24 +77,46 @@
 }
 
 @media (min-width: 1200px) {
+  .page:has(.article-with-chapters) {
+    max-width: none;
+  }
+
   .article-with-chapters {
     display: grid;
-    grid-template-columns: 220px minmax(0, 740px);
-    gap: 32px;
-    max-width: 992px;
+    grid-template-columns: 320px minmax(0, 740px);
+    gap: clamp(32px, 5vw, 96px);
+    max-width: none;
     align-items: start;
   }
 
   .chapter-sidebar {
-    display: block;
-    position: sticky;
-    top: 24px;
-    max-height: calc(100dvh - 48px);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 24px;
+    top: 96px;
+    width: 320px;
+    height: calc(100dvh - 120px);
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    padding-right: 16px;
+    border-right: 1px solid var(--line);
+  }
+
+  .article-with-chapters > .reader {
+    grid-column: 2;
+  }
+
+  .chapter-sidebar > .chapter-navigation {
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
+    scrollbar-width: thin;
   }
 
   .chapter-sidebar h2 {
+    flex-shrink: 0;
     margin: 0 0 16px;
     font-size: 24px;
     font-weight: 600;
@@ -99,4 +125,56 @@
   .chapter-disclosure {
     display: none;
   }
+}
+
+.chapter-title-link {
+  font-size: 20px;
+  font-weight: 600;
+}
+.chapter-topic {
+  font-size: 22px;
+}
+.chapter-navigation .chapter-heading-link {
+  font-size: 17px;
+  color: var(--muted);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.chapter-navigation .chapter-headings .chapter-headings .chapter-heading-link {
+  font-size: 16px;
+}
+.chapter-navigation .chapter-headings {
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
+  margin-left: 11px;
+}
+.chapter-navigation a[aria-current='location'] {
+  color: var(--violet);
+}
+.reader :is(h1, h2, h3, h4, h5, h6)[id] {
+  scroll-margin-top: 24px;
+}
+
+.chapter-branch > summary {
+  display: flex;
+  align-items: baseline;
+  cursor: pointer;
+  list-style: none;
+  font-size: 20px;
+}
+.chapter-branch > summary::-webkit-details-marker {
+  display: none;
+}
+.chapter-branch > summary::before {
+  content: '›';
+  color: var(--muted);
+  width: 14px;
+  flex-shrink: 0;
+}
+.chapter-branch[open] > summary::before {
+  content: '⌄';
+}
+.chapter-branch > summary .chapter-title-link {
+  flex: 1;
+  min-width: 0;
 }

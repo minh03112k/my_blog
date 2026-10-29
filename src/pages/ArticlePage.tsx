@@ -1,7 +1,10 @@
-import { Link } from 'react-router'
+import { useEffect } from 'react'
+import { Link, useLocation } from 'react-router'
+import { BSTInsertionWalkthrough } from '../components/organisms/BSTInsertionWalkthrough'
 import { ArrowLeft } from 'lucide-react'
 import ReactMarkdown, { defaultUrlTransform } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { articleHeadingAnchors } from '../data/article-headings'
 import type { Article } from '../data/articles'
 import { CategoryBadge } from '../components/atoms/CategoryBadge'
 import { ChapterNavigation } from '../components/organisms/ChapterNavigation'
@@ -20,16 +23,34 @@ export function ArticlePage({
   article,
   parent,
   chapters,
+  topic,
 }: {
+  readonly topic: Article | undefined
   readonly article: Article
   readonly parent: Article | undefined
   readonly chapters: readonly Article[]
 }) {
+  const location = useLocation()
+  useEffect(() => {
+    const section = new URLSearchParams(location.search).get('section')
+    const target = section ? document.getElementById(section) : null
+    if (target) {
+      target.scrollIntoView()
+      target.setAttribute('tabindex', '-1')
+      target.focus({ preventScroll: true })
+    }
+  }, [article.slug, location.search])
   const chapterIndex = chapters.findIndex(
     (chapter) => chapter.slug === article.slug,
   )
   const previous = chapterIndex > 0 ? chapters[chapterIndex - 1] : undefined
   const next = chapterIndex >= 0 ? chapters[chapterIndex + 1] : undefined
+  function chapterDepth(chapter: Article): number {
+    const ancestor = chapters.find(
+      (candidate) => candidate.slug === chapter.chapter?.parent,
+    )
+    return ancestor ? chapterDepth(ancestor) + 1 : 0
+  }
   const sections = [
     ...new Set(chapters.map((chapter) => chapter.chapter?.section)),
   ]
@@ -43,10 +64,9 @@ export function ArticlePage({
       if (onlyChapter && onlyChapter.title === section) {
         return `- [${section}](#/article/${onlyChapter.slug})`
       }
-      return `- ${section}\n${sectionChapters.map((chapter) => `  - [${chapter.title}](#/article/${chapter.slug})`).join('\n')}`
+      return `- ${section}\n${sectionChapters.map((chapter) => `  ${'  '.repeat(chapterDepth(chapter))}- [${chapter.title}](#/article/${chapter.slug})`).join('\n')}`
     })
     .join('\n')
-  const topic = parent ?? (article.kind === 'outline' ? article : undefined)
   return (
     <div className={topic ? 'article-with-chapters' : undefined}>
       {topic ? (
@@ -61,7 +81,7 @@ export function ArticlePage({
       ) : null}
       <article className="reader">
         {topic ? (
-          <details className="chapter-disclosure" key={article.slug}>
+          <details className="chapter-disclosure">
             <summary>Chapters</summary>
             <ChapterNavigation
               topic={topic}
@@ -101,10 +121,13 @@ export function ArticlePage({
             </ReactMarkdown>
           </nav>
         ) : null}
+        {article.slug === 'insert-nodes' ? (
+          <BSTInsertionWalkthrough key={article.slug} />
+        ) : null}
         {article.body.trim() ? (
           <div className="prose mt-8 border-t border-(--line) pt-5">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, articleHeadingAnchors]}
               urlTransform={resolveArticleUrl}
             >
               {article.body}

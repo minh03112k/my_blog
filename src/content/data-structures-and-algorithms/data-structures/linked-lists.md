@@ -80,8 +80,18 @@ Once you have the node to insert after, inserting a new node takes `O(1)` work: 
 
 Finding the insertion position may still require `O(n)` traversal. Similarly, deleting a node from a singly linked list generally requires its predecessor; locating that predecessor can take `O(n)`.
 
+## Linked list queue
+
+The earlier [Python list-backed queue](#/article/queues) uses `insert(0, item)` for `push`, which takes `O(n)` time because it shifts the existing items.
+
+A linked list queue that maintains both a head and a tail has `O(1)` `push` operations: append a new node at the tail and update the tail reference. Removing from the head also takes `O(1)` time, without searching through the chain.
+
 ## Trade-offs
 
-Linked lists add node and reference overhead and require traversal instead of direct indexed access. Their advantage is efficient reference updates when the required nodes are already available.
+Linked lists are usually a worse default choice than array-backed lists because:
 
-For a queue, maintaining both a head and a tail makes it possible to append at the tail and remove from the head without searching through the chain.
+- Each node adds memory overhead for references, and following nodes can make traversal slower than scanning a contiguous array of references.
+- Managing nodes and references makes them more complex to work with, debug, and reason about.
+- They have no constant-time random access: reaching a specific position requires traversal instead of direct indexing.
+
+Their advantage is efficient reference updates when the required nodes are already available. A **doubly linked list** stores references to both the previous and next nodes. When it maintains a head and a tail, it supports `O(1)` insertions and deletions at both ends. This can make it a better choice than an array-backed list when frequent updates at both ends are required.
